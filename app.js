@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSetting));
+app.use('/api-doc/zh-tw', swaggerUi.serve, swaggerUi.setup(swaggerSetting));
 
 
 // catch 404 and forward to error handler
