@@ -3,11 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var sassMiddleware = require('node-sass-middleware');
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerSetting = require('./config/swagger');
+// const swaggerFile = require('./swagger_output.json') ;
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+
 var app = express();
+const PORT = 3030;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSetting));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,5 +48,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(PORT,()=>{
+  console.log('Server is listening on port:'+ PORT);
+})
 
 module.exports = app;
